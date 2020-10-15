@@ -1,0 +1,10 @@
+module.exports={
+    viewStyle:{
+        flex:1,
+        justifyContent:"center",
+        backgroundColor:"orange"
+    },
+    card:{
+        alignContent:"center"
+    }
+}
