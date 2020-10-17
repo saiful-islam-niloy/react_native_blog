@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View } from 'react-native';
 import { Input, Button, Card, Text } from 'react-native-elements';
-import { FontAwesome } from 'react-native-vector-icons';
 import customStyle from '../asset/styles/AuthStyle';
-import { AuthContext } from '../providers/AuthProvider'
+import { AuthContext } from '../providers/AuthProvider';
+import {getDataJson} from "../functions/AsyncStorageFunction";
 
 const SignInScreen = (props) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     return (
         <AuthContext.Consumer>
             {(auth)=>(<View style={customStyle.viewStyle}>
@@ -13,13 +15,23 @@ const SignInScreen = (props) => {
                     <Card.Title>Welcome to My BLog App</Card.Title>
                     <Card.Divider />
                     <Input
-                        placeholder="Email Address" />
+                        placeholder="Email Address" 
+                        onChangeText={function (currentInput) { setEmail(currentInput) }} />
                     <Input
                         placeholder="Password"
-                        secureTextEntry={true} />
+                        secureTextEntry={true} 
+                        onChangeText={function (currentInput) { setPassword(currentInput) }} />
                     <Button
                         title="Sign In"
-                        onPress={function () { auth.setIsLoggedIn(true)}} />
+                        onPress={async function () { 
+                            let userData = await getDataJson(email);
+                            if(userData.password == password){
+                                auth.setIsLoggedIn(true);
+                                auth.setCurrentUser(userData);
+                            }else{
+                                alert("Login Failed!");
+                            }
+                        }} />
                     <Button
                         type="clear"
                         title="Don't have an account? Click here"
