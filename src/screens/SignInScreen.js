@@ -12,7 +12,7 @@ const SignInScreen = (props) => {
         <AuthContext.Consumer>
             {(auth)=>(<View style={customStyle.viewStyle}>
                 <Card>
-                    <Card.Title>Welcome to My BLog App</Card.Title>
+                    <Card.Title>Welcome to My Blog App</Card.Title>
                     <Card.Divider />
                     <Input
                         placeholder="Email Address" 
