@@ -7,14 +7,15 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import HomeScreen from './src/screens/HomeScreen';
 import NotificationScreen from './src/screens/NotificationScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faStickyNote, faHospital, faBell } from '@fortawesome/free-regular-svg-icons';
+import { faBell } from '@fortawesome/free-regular-svg-icons';
+import { faHome} from "@fortawesome/free-solid-svg-icons";
 
 import { AuthProvider, AuthContext } from './src/providers/AuthProvider';
-import { faAnchor, faHome, faRing } from "@fortawesome/free-solid-svg-icons";
 
 
 const HomeStack = createStackNavigator();
@@ -64,7 +65,7 @@ const AppDrawerScreen = () => {
   return (
     <Drawer.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
       <Drawer.Screen name="Home" component={HomeTabScreen} options={{ title: "Home" }} />
-      <Drawer.Screen name="Profile" component={SignUpScreen} options={{ title: "Sign Up" }} />
+      <Drawer.Screen name="Profile" component={ProfileScreen} options={{ title: "Profile" }} />
     </Drawer.Navigator>
   );
 }
