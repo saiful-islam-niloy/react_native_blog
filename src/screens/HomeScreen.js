@@ -1,7 +1,9 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Button, Header } from 'react-native-elements';
+import { Button, Header} from 'react-native-elements';
 import { AuthContext } from '../providers/AuthProvider';
+import Blog from '../components/Blog';
+import Post from '../components/Post';
 
 const HomeScreen = (props) => {
     return (
@@ -12,7 +14,13 @@ const HomeScreen = (props) => {
                     centerComponent={{text: "My Blog App"}}
                     rightComponent={{ icon: "lock-outline", color: "#fff", onPress: function () { auth.setIsLoggedIn(false); auth.setCurrentUser({}); } }}
                 />
-                <Text>
+
+                <Post/>
+
+                <Blog />
+
+
+                {/* <Text>
                     Welcome {auth.currentUser.name} </Text>
                 <Button
                     type="outline"
@@ -20,7 +28,7 @@ const HomeScreen = (props) => {
                     onPress={function () {
                         auth.setIsLoggedIn(false)
                         auth.setCurrentUser({})
-                    }} />
+                    }} /> */}
             </View>)}
         </AuthContext.Consumer>
     );
