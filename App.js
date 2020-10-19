@@ -3,17 +3,25 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import HomeScreen from './src/screens/HomeScreen';
 import NotificationScreen from './src/screens/NotificationScreen';
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faStickyNote, faHospital, faBell } from '@fortawesome/free-regular-svg-icons';
+
 import { AuthProvider, AuthContext } from './src/providers/AuthProvider';
+import { faAnchor, faHome, faRing } from "@fortawesome/free-solid-svg-icons";
+
 
 const HomeStack = createStackNavigator();
 const AuthStack = createStackNavigator();
 const HomeTab = createMaterialBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
 
 const HomeStackScreen = () => {
   return (
@@ -35,9 +43,29 @@ const AuthStackScreen = () => {
 const HomeTabScreen = () => {
   return (
     <HomeTab.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
-      <HomeTab.Screen name="Home" component={HomeScreen} options={{ title: "Home Screen" }} />
-      <HomeTab.Screen name="Notification" component={NotificationScreen} options={{ title: "Notification" }} />
+      <HomeTab.Screen name="Home" component={HomeScreen} options={{
+        title: "Home Screen",
+        tabBarIcon: ({ focused }) =>
+          focused ? (<FontAwesomeIcon icon={faHome} size={25} color={"white"} />)
+            : (<FontAwesomeIcon icon={faHome} size={20} color={"lightgray"} />)
+      }} />
+      <HomeTab.Screen name="Notification" component={NotificationScreen} options={{
+        title: "Notification",
+        tabBarIcon: ({ focused }) =>
+        focused ? (<FontAwesomeIcon icon={faBell} size={25} color={"white"} />)
+          : (<FontAwesomeIcon icon={faBell} size={20} color={"lightgray"} />)
+      }} />
     </HomeTab.Navigator>
+  );
+}
+
+
+const AppDrawerScreen = () => {
+  return (
+    <Drawer.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+      <Drawer.Screen name="Home" component={HomeTabScreen} options={{ title: "Home" }} />
+      <Drawer.Screen name="Profile" component={SignUpScreen} options={{ title: "Sign Up" }} />
+    </Drawer.Navigator>
   );
 }
 
@@ -46,7 +74,7 @@ function App() {
     <AuthProvider>
       <AuthContext.Consumer>
         {(auth) => (<NavigationContainer>
-          {auth.isLoggedIn ? <HomeTabScreen /> : <AuthStackScreen />}
+          {auth.isLoggedIn ? <AppDrawerScreen /> : <AuthStackScreen />}
         </NavigationContainer>)}
       </AuthContext.Consumer>
     </AuthProvider>

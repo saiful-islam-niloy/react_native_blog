@@ -1,19 +1,26 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Button } from 'react-native-elements';
+import { Button, Header } from 'react-native-elements';
 import { AuthContext } from '../providers/AuthProvider';
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
     return (
         <AuthContext.Consumer>
-            {(auth)=>(<View>
-                <Text>Welcome {auth.currentUser.name}</Text>
+            {(auth) => (<View>
+                <Header
+                    leftComponent={{ icon: "menu", color: "#fff", onPress: function () { props.navigation.toggleDrawer() } }}
+                    centerComponent={{text: "My Blog App"}}
+                    rightComponent={{ icon: "lock-outline", color: "#fff", onPress: function () { auth.setIsLoggedIn(false); auth.setCurrentUser({}); } }}
+                />
+                <Text>
+                    Welcome {auth.currentUser.name} </Text>
                 <Button
                     type="outline"
                     title="Log Out"
                     onPress={function () {
-                         auth.setIsLoggedIn(false)
-                         auth.setCurrentUser({}) }} />
+                        auth.setIsLoggedIn(false)
+                        auth.setCurrentUser({})
+                    }} />
             </View>)}
         </AuthContext.Consumer>
     );
