@@ -1,45 +1,72 @@
 import AsyncStorage from "@react-native-community/async-storage";
+let globalBlog = {
+    "post":[]
+}
 
-create storeBlog = async (key, value) => {
+let i;
+
+const storeBlog = async (key, value) => {
+    blogArr= await getBlogJson(key)
+    console.log("Type: "+ typeof(blogArr))
+    // console.log("Data: "+ JSON.parse(blogArr).post[0]["blogData"])
+    console.log("Real Data: "+ JSON.stringify(blogArr))
+
+ 
+    if(blogArr !== null){
+        globalBlog.post = []
+        for(i = 0; i<JSON.parse(blogArr).post.length; i++)
+            globalBlog.post.push(JSON.parse(blogArr).post[i])
+    }
+    globalBlog.post.push(value)
+
     try {
-        await AsyncStorage.setItem(key, value);
+        let convertedToString = JSON.stringify(globalBlog);
+        await AsyncStorage.setItem(key, convertedToString);
         alert("Data Saved");
     } catch (error) {
         alert(error);
     }
 }
 
-const getBlogJson = async(key)=>{
-    try{
+const getBlogJson = async (key) => {
+    try {
         let data = await AsyncStorage.getItem(key);
-        if(data != null)
-            return JSON.parse(data);
-        else{
-            alert("No data found!");
-            return "-1";
-        }    
-    }catch(error){
+        if (data != null)
+            return data;
+        else 
+            return null;
+        
+    } catch (error) {
         alert(error);
     }
 }
 
-const removeBlog = async(key)=>{
-    try{
+
+const removeBlog = async (key) => {
+    try {
         await AsyncStorage.removeItem(key);
         alert("Data removed successfully")
-    }catch(error){
+    } catch (error) {
         alert(error);
     }
 }
 
 
-function generateUID(){
-    let blogList = getBlogJson("blogList");
-    if (blogList === "-1"){
+const generateUID = async () => {
+    let blogList = await getBlogJson("blogList");
+    if (blogList === null) {
         return "0";
-    }else{
-        console.log(blogList.lenght)
+    } else {
+        let size = JSON.parse(blogList).post.length
+        console.log("Length: "+size)
+        return size+1+"";
     }
-    console.log(blogList)
 }
-export {storeBlog, removeBlog, getBlogJson};
+
+export {
+    storeBlog,
+    removeBlog,
+    getBlogJson,
+    generateUID
+};
+

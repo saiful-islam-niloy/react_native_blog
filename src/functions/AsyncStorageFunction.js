@@ -1,4 +1,3 @@
-// import { AsyncStorage } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 const storeData = async (key, value) => {
@@ -10,45 +9,51 @@ const storeData = async (key, value) => {
     }
 }
 
-const storeDataJson = async(key, value)=>{
-    try{
+const storeDataJson = async (key, value) => {
+    try {
         await AsyncStorage.setItem(key, JSON.stringify(value));
-    }catch(error){
+    } catch (error) {
         alert(error);
     }
 }
 
-const getData = async(key)=>{
-    try{
+const getData = async (key) => {
+    try {
         let data = await AsyncStorage.getItem(key);
-        if(data != null)
+        if (data != null)
             return data;
-        else    
+        else
             alert("No data found!");
-    }catch(error){
+    } catch (error) {
         alert(error);
     }
 }
 
-const getDataJson = async(key)=>{
-    try{
+const getDataJson = async (key) => {
+    try {
         let data = await AsyncStorage.getItem(key);
-        if(data != null)
+        if (data != null)
             return JSON.parse(data);
-        else    
+        else
             alert("No data found!");
-    }catch(error){
+    } catch (error) {
         alert(error);
     }
 }
 
-const removeData = async(key)=>{
-    try{
+const removeData = async (key) => {
+    try {
         await AsyncStorage.removeItem(key);
         alert("Data removed successfully")
-    }catch(error){
+    } catch (error) {
         alert(error);
     }
 }
 
-export {storeData, storeDataJson, getData, getDataJson, removeData};
+export {
+    storeData,
+    storeDataJson,
+    getData,
+    getDataJson,
+    removeData
+};
