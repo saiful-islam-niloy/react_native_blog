@@ -29,10 +29,11 @@ const Post = () => {
                             title="Post"
                             onPress= {async() => { 
                                 let id = await generateUID() 
+                                let author = auth.currentUser.name
                                 setBlogId(JSON.stringify(id))
-                                console.log("generateUID():"+JSON.stringify(blogId))
                                 setAuthorId("1")
-                                setAuthorName(auth.currentUser.name)
+                                setAuthorName(author)
+                                console.log(authorName)
                                 setDate("October 29, 2020")
                                 let blog = {blogId, authorId, authorName, date, blogData};
                                 storeBlog("blogList", blog)
