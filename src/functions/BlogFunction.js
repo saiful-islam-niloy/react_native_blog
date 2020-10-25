@@ -1,20 +1,17 @@
 import AsyncStorage from "@react-native-community/async-storage";
 let globalBlog = {
-    "post":[]
+    "post": []
 }
 
 let i;
+let blogArr;
 
 const storeBlog = async (key, value) => {
-    blogArr= await getBlogJson(key)
-    console.log("Type: "+ typeof(blogArr))
-    // console.log("Data: "+ JSON.parse(blogArr).post[0]["blogData"])
-    console.log("Real Data: "+ JSON.stringify(blogArr))
+    blogArr = await getBlogJson(key)
 
- 
-    if(blogArr !== null){
+    if (blogArr !== null) {
         globalBlog.post = []
-        for(i = 0; i<JSON.parse(blogArr).post.length; i++)
+        for (i = 0; i < JSON.parse(blogArr).post.length; i++)
             globalBlog.post.push(JSON.parse(blogArr).post[i])
     }
     globalBlog.post.push(value)
@@ -33,9 +30,9 @@ const getBlogJson = async (key) => {
         let data = await AsyncStorage.getItem(key);
         if (data != null)
             return data;
-        else 
+        else
             return null;
-        
+
     } catch (error) {
         alert(error);
     }
@@ -52,21 +49,47 @@ const removeBlog = async (key) => {
 }
 
 
-const generateUID = async () => {
-    let blogList = await getBlogJson("blogList");
-    if (blogList === null) {
-        return "0";
-    } else {
-        let size = JSON.parse(blogList).post.length
-        console.log("Length: "+size)
-        return size+1+"";
+const generateUID = () => {
+    return new Date().getTime();
+}
+
+const clearEverything = async () => {
+    try {
+        await AsyncStorage.clear()
+    } catch (error) {
+        alert(error)
     }
+}
+
+const getTime = () => {
+    var d = new Date();
+    var result = "";
+    var month = new Array(12);
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+
+    result += month[d.getUTCMonth()];
+    result += " "+ d.getDate()+ " ,"
+    result += d.getFullYear()
+    return result;
 }
 
 export {
     storeBlog,
     removeBlog,
     getBlogJson,
-    generateUID
+    generateUID,
+    clearEverything,
+    getTime
 };
 

@@ -4,7 +4,7 @@ import { AuthContext } from '../providers/AuthProvider';
 import { Card, Input, Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import {generateUID, createBlogJson, storeBlog, getBlogJson} from '../functions/BlogFunction';
+import {generateUID, createBlogJson, storeBlog, getBlogJson, getTime} from '../functions/BlogFunction';
 
 
 const Post = () => {
@@ -27,16 +27,21 @@ const Post = () => {
                             onChangeText={(data) => { setBlogData(data) }} />
                         <Button
                             title="Post"
-                            onPress= {async() => { 
-                                let id = await generateUID() 
+                            onPress= {() => { 
+                                let temp = new Date()
                                 let author = auth.currentUser.name
-                                setBlogId(JSON.stringify(id))
-                                setAuthorId("1")
+                                let email = auth.currentUser.email
+                                setBlogId(temp.getTime())
+                                setAuthorId(email)
                                 setAuthorName(author)
-                                console.log(authorName)
-                                setDate("October 29, 2020")
+                                setDate(getTime())
                                 let blog = {blogId, authorId, authorName, date, blogData};
-                                storeBlog("blogList", blog)
+                                if(blogId !== "")
+                                    storeBlog("blogList", blog)
+                                else
+                                    alert("Something went wrong! Try Again")
+
+                                console.log("Blog ID:" +blogId)
                             }} />
                     </Card>
                 </View>)
