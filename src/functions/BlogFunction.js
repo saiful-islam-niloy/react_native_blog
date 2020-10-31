@@ -84,12 +84,25 @@ const getTime = () => {
     return result;
 }
 
+const storeLike = async () =>{
+    blogArr = await getBlogJson("blogList")
+
+    if (blogArr !== null) {
+        globalBlog.post = []
+        for (i = 0; i < JSON.parse(blogArr).post.length; i++){
+            globalBlog.post.push(JSON.parse(blogArr).post[i])
+            console.log(JSON.parse(blogArr).post[i])
+        }
+    }
+}
+
 export {
     storeBlog,
     removeBlog,
     getBlogJson,
     generateUID,
     clearEverything,
-    getTime
+    getTime,
+    storeLike
 };
 

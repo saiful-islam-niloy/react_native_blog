@@ -1,11 +1,10 @@
 import React from "react";
 import { View } from "react-native";
-import { Header } from 'react-native-elements';
+import { Header, Button } from 'react-native-elements';
 import { AuthContext } from '../providers/AuthProvider';
 import Blog from '../components/Blog';
 import Post from '../components/Post';
-import { getBlogJson, clearEverything } from '../functions/BlogFunction';
-import { ScrollView } from "react-native-gesture-handler";
+import { clearEverything } from '../functions/BlogFunction';
 
 const HomeScreen = (props) => {
     return (
@@ -18,7 +17,7 @@ const HomeScreen = (props) => {
                 />
 
                 <Post />
-                <Blog />
+                <Blog navigation={props.navigation} user={auth.currentUser}/>
             </View>)}
         </AuthContext.Consumer>
     );

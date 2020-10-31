@@ -10,6 +10,7 @@ import NotificationScreen from './src/screens/NotificationScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
+import CommentScreen from './src/screens/CommentScreen';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBell } from '@fortawesome/free-regular-svg-icons';
@@ -66,6 +67,7 @@ const AppDrawerScreen = () => {
     <Drawer.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
       <Drawer.Screen name="Home" component={HomeTabScreen} options={{ title: "Home" }} />
       <Drawer.Screen name="Profile" component={ProfileScreen} options={{ title: "Profile" }} />
+      <Drawer.Screen name="Comment" component={CommentScreen} options={{ title: "Comments" }} />
     </Drawer.Navigator>
   );
 }
