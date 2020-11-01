@@ -1,44 +1,61 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import AsyncStorage from "@react-native-community/async-storage";
-import { View, ScrollView, FlatList } from 'react-native';
-import { Card, Text, Button } from 'react-native-elements';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { storeLike } from '../functions/BlogFunction';
+import {View, ScrollView, FlatList} from 'react-native';
+import {Card, Text, Button} from 'react-native-elements';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faUser} from '@fortawesome/free-solid-svg-icons';
+import {storeLike} from '../functions/BlogFunction';
 
 export default class Blog extends Component {
     constructor() {
         super();
         this.state = {
             data: [],
-            view: ""
         }
     }
 
     async componentDidMount() {
         let blogList = await AsyncStorage.getItem('blogList')
-        if (blogList !== null)
-            this.setState({ data: JSON.parse(blogList).post })
+        let keys = [];
+        let data = [];
+        if (blogList !== null){
+            for(let key in JSON.parse(blogList))
+                keys.push(key)
+
+            let json = JSON.parse(blogList);
+            for(let i= 0; i<keys.length; i++){
+                let blog = {
+                    "authorName":json[keys[i]]["authorName"],
+                    "authorId":json[keys[i]]["authorId"],
+                    "date":json[keys[i]]["date"],
+                    "blogData":json[keys[i]]["blogData"],
+                    "blogId":json[keys[i]]["blogId"],
+                }
+                data.push(blog)
+            }
+            this.setState({data: data})
+            console.log("state in blog showing: "+JSON.stringify(this.state.data))
+        }
     }
 
     renderBlog = (item) => (
         <Card>
-            <Text style={{ alignSelf: "flex-start", fontSize: 25 }}>
-                <FontAwesomeIcon icon={faUser} size={20} color={"blue"} />
+            <Text style={{alignSelf: "flex-start", fontSize: 25}}>
+                <FontAwesomeIcon icon={faUser} size={20} color={"blue"}/>
                 {item.authorName}
             </Text>
-            <Text style={{ fontStyle: "italic", color: "gray" }}>{item.authorId}</Text>
-            <Text style={{ fontStyle: "italic", color: "gray" }}>{item.date}</Text>
-            <Card.Divider />
+            <Text style={{fontStyle: "italic", color: "gray"}}>{item.authorId}</Text>
+            <Text style={{fontStyle: "italic", color: "gray"}}>{item.date}</Text>
+            <Card.Divider/>
             <Text>{item.blogData}</Text>
-            <Card.Divider />
-            <Button title={"Like"} type="outline" onPress={() => storeLike()} />
+            <Card.Divider/>
+            <Button title={"Like"} type="outline" onPress={() => storeLike()}/>
             <Button title="Comment" type="outline"
-                onPress={
-                    () => {
-                        this.props.navigation.navigate("Comment", { blogId: item.blogId })
-                    }
-                } />
+                    onPress={
+                        () => {
+                            this.props.navigation.navigate("Comment", {blogId: item.blogId})
+                        }
+                    }/>
         </Card>
     );
 
@@ -48,7 +65,6 @@ export default class Blog extends Component {
             <View>
                 <FlatList
                     data={this.state.data}
-                    // renderItem={this.renderBlog}
                     renderItem={({item}) => {
                         return (
                             <this.renderBlog
