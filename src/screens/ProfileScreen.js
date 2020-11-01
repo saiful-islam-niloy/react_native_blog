@@ -1,12 +1,10 @@
 import React from 'react';
 import { View, Image, SafeAreaView } from 'react-native';
-import { Button, Header, Text } from 'react-native-elements';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBox } from '@fortawesome/free-solid-svg-icons';
+import { Header, Text } from 'react-native-elements';
 import { AuthContext } from '../providers/AuthProvider';
 
 
-const ProfileScreen = () => {
+const ProfileScreen = (props) => {
     return (
        <AuthContext.Consumer>
            {
