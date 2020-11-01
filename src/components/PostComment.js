@@ -21,12 +21,21 @@ class PostComment extends Component {
 
     async postComment(){
         let data = this.state.data;
-        data[this.props.blogId].comment = {
-            [this.props.authorName]:{
-                "authorName":this.props.authorName,
+        console.log(data[this.props.blogId].comment)
+        if(data[this.props.blogId].comment == undefined){
+            data[this.props.blogId].comment = {
+                [this.props.currentUserName]:{
+                    "commenter":this.props.currentUserName,
+                    "comment":this.state.comment
+                }
+            }
+        }else {
+            data[this.props.blogId].comment[this.props.currentUserName] = {
+                "commenter":this.props.currentUserName,
                 "comment":this.state.comment
             }
         }
+
         console.log(JSON.stringify(data))
         this.setState({data:data})
         await storeJson(data)

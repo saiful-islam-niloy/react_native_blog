@@ -59,7 +59,7 @@ class CommentScreen extends Component {
                             {this.state.data}
                         </Text>
                     </Card>
-                    <PostComment blogId={this.state.blogId} authorName={this.state.authorName}/>
+                    <PostComment blogId={this.state.blogId} authorName={this.state.authorName} currentUserName={this.props.route.params.currentUserName}/>
                 </ScrollView>
             </View>
         );

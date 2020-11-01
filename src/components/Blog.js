@@ -5,6 +5,7 @@ import {Card, Text, Button} from 'react-native-elements';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import {storeLike} from '../functions/BlogFunction';
+import {AuthContext} from "../providers/AuthProvider";
 
 export default class Blog extends Component {
     constructor() {
@@ -58,8 +59,10 @@ export default class Blog extends Component {
                                     blogId: item.blogId,
                                     authorName:item.authorName,
                                     date:item.date,
-                                    data:item.blogData
+                                    data:item.blogData,
+                                    currentUserName:item.currentUserName,
                                 })
+                            console.log("current user name"+item.currentUserName)
                         }
                     }/>
         </Card>
@@ -68,22 +71,29 @@ export default class Blog extends Component {
     render() {
         let i = 0;
         return (
-            <View>
-                <FlatList
-                    data={this.state.data}
-                    renderItem={({item}) => {
-                        return (
-                            <this.renderBlog
-                                authorName={item.authorName}
-                                authorId={item.authorId}
-                                date={item.date}
-                                blogData={item.blogData}
-                                blogId={item.blogId}
-                            />)
-                    }}
-                    keyExtractor={item => `${i++}`}
-                />
-            </View>
+           <AuthContext.Consumer>
+               {
+                   (auth)=>(
+                       <View>
+                           <FlatList
+                               data={this.state.data}
+                               renderItem={({item}) => {
+                                   return (
+                                       <this.renderBlog
+                                           authorName={item.authorName}
+                                           authorId={item.authorId}
+                                           date={item.date}
+                                           blogData={item.blogData}
+                                           blogId={item.blogId}
+                                           currentUserName={auth.currentUser.name}
+                                       />)
+                               }}
+                               keyExtractor={item => `${i++}`}
+                           />
+                       </View>
+                   )
+               }
+           </AuthContext.Consumer>
         )
     }
 }
