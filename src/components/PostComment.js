@@ -4,6 +4,7 @@ import {Button, Card, Input} from "react-native-elements";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faComment} from "@fortawesome/free-solid-svg-icons";
 import {getJson, getTime, storeBlog, storeJson} from "../functions/BlogFunction";
+import {storeNotification} from "../functions/NotificationFunction";
 
 class PostComment extends Component {
     constructor() {
@@ -34,6 +35,13 @@ class PostComment extends Component {
                 "commenter":this.props.currentUserName,
                 "comment":this.state.comment
             }
+            await storeNotification(
+                this.props.authorName,
+                {
+                    "type": "comment",
+                    "author": this.props.currentUserName,
+                }
+            )
         }
 
         console.log(JSON.stringify(data))

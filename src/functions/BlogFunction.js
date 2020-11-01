@@ -56,36 +56,6 @@ const generateUID = () => {
     return new Date().getTime();
 }
 
-const clearEverything = async () => {
-    try {
-        await AsyncStorage.clear()
-    } catch (error) {
-        alert(error)
-    }
-}
-
-const getTime = () => {
-    var d = new Date();
-    var result = "";
-    var month = new Array(12);
-    month[0] = "January";
-    month[1] = "February";
-    month[2] = "March";
-    month[3] = "April";
-    month[4] = "May";
-    month[5] = "June";
-    month[6] = "July";
-    month[7] = "August";
-    month[8] = "September";
-    month[9] = "October";
-    month[10] = "November";
-    month[11] = "December";
-
-    result += month[d.getUTCMonth()];
-    result += " " + d.getDate() + " ,"
-    result += d.getFullYear()
-    return result;
-}
 
 const storeLike = async (blogId) => {
     let data = await getBlogJson("blogList")
@@ -133,8 +103,6 @@ export {
     getBlogJson,
     getJson,
     generateUID,
-    clearEverything,
-    getTime,
     storeLike
 };
 

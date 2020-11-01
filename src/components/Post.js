@@ -29,12 +29,13 @@ const Post = () => {
                             title="Post"
                             onPress= {() => { 
                                 let temp = new Date()
+                                let date = temp.getDate();
                                 let author = auth.currentUser.name
                                 let email = auth.currentUser.email
                                 setBlogId(""+temp.getTime())
                                 setAuthorId(email)
                                 setAuthorName(author)
-                                setDate(getTime())
+                                setDate(date)
                                 let blog = {blogId, authorId, authorName, date, blogData, like:"0"};
                                 if(blogId !== "")
                                     storeBlog(blog)
