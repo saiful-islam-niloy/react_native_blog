@@ -4,7 +4,6 @@ import { View, ScrollView, FlatList } from 'react-native';
 import { Card, Text, Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { color } from 'react-native-reanimated';
 import { storeLike } from '../functions/BlogFunction';
 
 export default class Blog extends Component {

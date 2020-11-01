@@ -6,19 +6,22 @@ let globalBlog = {
 let i;
 let blogArr;
 
-const storeBlog = async (key, value) => {
-    blogArr = await getBlogJson(key)
+const storeBlog = async (value) => {
+    blogArr = await getBlogJson("blogList")
+    let key = value.blogId;
 
-    if (blogArr !== null) {
-        globalBlog.post = []
-        for (i = 0; i < JSON.parse(blogArr).post.length; i++)
-            globalBlog.post.push(JSON.parse(blogArr).post[i])
+    if(blogArr == null){
+        console.log("blog arr is null")
+        blogArr= {"1111103525303":value};
     }
-    globalBlog.post.push(value)
-
+    else{
+        blogArr = JSON.parse(blogArr)
+        console.log("tt22: "+JSON.stringify(blogArr))
+        blogArr[key] = value;
+    }
     try {
-        let convertedToString = JSON.stringify(globalBlog);
-        await AsyncStorage.setItem(key, convertedToString);
+        let convertedToString = JSON.stringify(blogArr);
+        await AsyncStorage.setItem("blogList", convertedToString);
         alert("Data Saved");
     } catch (error) {
         alert(error);
@@ -84,17 +87,14 @@ const getTime = () => {
     return result;
 }
 
-const storeLike = async () =>{
+const storeLike = async (authorId) =>{
     blogArr = await getBlogJson("blogList")
 
     if (blogArr !== null) {
-        globalBlog.post = []
-        for (i = 0; i < JSON.parse(blogArr).post.length; i++){
-            globalBlog.post.push(JSON.parse(blogArr).post[i])
-            console.log(JSON.parse(blogArr).post[i])
-        }
+
     }
 }
+
 
 export {
     storeBlog,

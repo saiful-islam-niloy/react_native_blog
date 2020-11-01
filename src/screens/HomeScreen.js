@@ -4,7 +4,7 @@ import { Header, Button } from 'react-native-elements';
 import { AuthContext } from '../providers/AuthProvider';
 import Blog from '../components/Blog';
 import Post from '../components/Post';
-import { clearEverything } from '../functions/BlogFunction';
+import { getBlogJson } from '../functions/BlogFunction';
 
 const HomeScreen = (props) => {
     return (
@@ -12,7 +12,7 @@ const HomeScreen = (props) => {
             {(auth) => (<View>
                 <Header
                     leftComponent={{ icon: "menu", color: "#fff", onPress: function () { props.navigation.toggleDrawer() } }}
-                    centerComponent={{ text: "My Blog App", onPress: function () { clearEverything(); } }}
+                    centerComponent={{ text: "My Blog App", onPress: function () { console.log(JSON.parse(getBlogJson("blogList"))); } }}
                     rightComponent={{ icon: "lock-outline", color: "#fff", onPress: function () { auth.setIsLoggedIn(false); auth.setCurrentUser({}); } }}
                 />
 

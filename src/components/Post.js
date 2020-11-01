@@ -31,13 +31,13 @@ const Post = () => {
                                 let temp = new Date()
                                 let author = auth.currentUser.name
                                 let email = auth.currentUser.email
-                                setBlogId(temp.getTime())
+                                setBlogId(""+temp.getTime())
                                 setAuthorId(email)
                                 setAuthorName(author)
                                 setDate(getTime())
-                                let blog = {blogId, authorId, authorName, date, blogData, comment:[], like:""};
+                                let blog = {blogId, authorId, authorName, date, blogData};
                                 if(blogId !== "")
-                                    storeBlog("blogList", blog)
+                                    storeBlog(blog)
                                 else
                                     alert("Something went wrong! Try Again")
 
