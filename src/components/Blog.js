@@ -53,7 +53,13 @@ export default class Blog extends Component {
             <Button title="Comment" type="outline"
                     onPress={
                         () => {
-                            this.props.navigation.navigate("Comment", {blogId: item.blogId})
+                            this.props.navigation.navigate("Comment",
+                                {
+                                    blogId: item.blogId,
+                                    authorName:item.authorName,
+                                    date:item.date,
+                                    data:item.blogData
+                                })
                         }
                     }/>
         </Card>

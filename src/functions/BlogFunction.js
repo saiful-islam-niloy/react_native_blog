@@ -12,7 +12,7 @@ const storeBlog = async (value) => {
 
     if(blogArr == null){
         console.log("blog arr is null")
-        blogArr= {"1111103525303":value};
+        blogArr= {[key]:value};
     }
     else{
         blogArr = JSON.parse(blogArr)
@@ -95,11 +95,36 @@ const storeLike = async (authorId) =>{
     }
 }
 
+const getJson = async (key) => {
+    try {
+        let data = await AsyncStorage.getItem(key);
+        if (data != null)
+            return data;
+        else
+            return null;
+
+    } catch (error) {
+        alert(error);
+    }
+}
+
+const storeJson = async (value) => {
+    try {
+        let convertedToString = JSON.stringify(value);
+        await AsyncStorage.setItem("blogList", convertedToString);
+        alert("Comment Posted");
+    } catch (error) {
+        alert(error);
+    }
+}
+
 
 export {
     storeBlog,
+    storeJson,
     removeBlog,
     getBlogJson,
+    getJson,
     generateUID,
     clearEverything,
     getTime,
