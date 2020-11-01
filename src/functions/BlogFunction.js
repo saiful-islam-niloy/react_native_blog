@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage";
+
 let globalBlog = {
     "post": []
 }
@@ -10,13 +11,12 @@ const storeBlog = async (value) => {
     blogArr = await getBlogJson("blogList")
     let key = value.blogId;
 
-    if(blogArr == null){
+    if (blogArr == null) {
         console.log("blog arr is null")
-        blogArr= {[key]:value};
-    }
-    else{
+        blogArr = {[key]: value};
+    } else {
         blogArr = JSON.parse(blogArr)
-        console.log("tt22: "+JSON.stringify(blogArr))
+        console.log("tt22: " + JSON.stringify(blogArr))
         blogArr[key] = value;
     }
     try {
@@ -82,16 +82,23 @@ const getTime = () => {
     month[11] = "December";
 
     result += month[d.getUTCMonth()];
-    result += " "+ d.getDate()+ " ,"
+    result += " " + d.getDate() + " ,"
     result += d.getFullYear()
     return result;
 }
 
-const storeLike = async (authorId) =>{
-    blogArr = await getBlogJson("blogList")
-
+const storeLike = async (blogId) => {
+    let data = await getBlogJson("blogList")
+    let blogArr = JSON.parse(data)
     if (blogArr !== null) {
-
+        if(blogArr[blogId]["like"] == undefined){
+            blogArr[blogId]["like"] = "1";
+        }else {
+            let count = parseInt(blogArr[blogId]["like"])+1
+            blogArr[blogId]["like"] = count.toString()
+        }
+        await storeJson(blogArr)
+        console.log(blogArr)
     }
 }
 
@@ -112,7 +119,7 @@ const storeJson = async (value) => {
     try {
         let convertedToString = JSON.stringify(value);
         await AsyncStorage.setItem("blogList", convertedToString);
-        alert("Comment Posted");
+        alert("Successful");
     } catch (error) {
         alert(error);
     }

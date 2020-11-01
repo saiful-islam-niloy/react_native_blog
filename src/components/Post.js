@@ -35,7 +35,7 @@ const Post = () => {
                                 setAuthorId(email)
                                 setAuthorName(author)
                                 setDate(getTime())
-                                let blog = {blogId, authorId, authorName, date, blogData};
+                                let blog = {blogId, authorId, authorName, date, blogData, like:"0"};
                                 if(blogId !== "")
                                     storeBlog(blog)
                                 else

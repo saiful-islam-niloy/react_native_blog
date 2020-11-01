@@ -50,7 +50,7 @@ export default class Blog extends Component {
             <Card.Divider/>
             <Text>{item.blogData}</Text>
             <Card.Divider/>
-            <Button title={"Like"} type="outline" onPress={() => storeLike()}/>
+            <Button title={"Like"} type="outline" onPress={() => storeLike(item.blogId)}/>
             <Button title="Comment" type="outline"
                     onPress={
                         () => {
